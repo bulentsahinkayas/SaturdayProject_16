@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="TestNG Parameters Suite">
+    <test name="Params">
+        <parameter name="firstName" value="Bulent" />
+        <parameter name="lastName" value="Sahin" />
+        <parameter name="employeeId" value="123456" />
+        <parameter name="docNumber" value="654321" />
+
+        <classes>
+            <class name="Project_16_2" />
+        </classes>
+    </test>
+</suite>
