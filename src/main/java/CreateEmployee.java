@@ -1,13 +1,18 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 public class CreateEmployee {
 
     WebDriver driver;
-    WebDriverWait wait;
+    protected WebDriverWait wait;
+
+
 
     public CreateEmployee(WebDriver driver, WebDriverWait wait){
         this.driver = driver;
@@ -47,5 +52,33 @@ public class CreateEmployee {
         enterDocumentNumber.sendKeys(docNumber);
         WebElement saveButton = wait.until(ExpectedConditions.visibilityOfElementLocated(enterSaveButton));
         saveButton.click();
+
+    }
+    public void createByAddingPhoto(String firstName, String lastName, String employeeId, String docNumber) throws InterruptedException {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(humanResMenu)).click();
+        WebElement clickEmployees = wait.until(ExpectedConditions.visibilityOfElementLocated(employeeMenu));
+        clickEmployees.click();
+        WebElement employeesAddSign = wait.until(ExpectedConditions.visibilityOfElementLocated(employeeAddButton));
+        employeesAddSign.click();
+        WebElement enterNameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(enterName));
+        enterNameInput.sendKeys(firstName);
+        WebElement enterLastname = wait.until(ExpectedConditions.visibilityOfElementLocated(enterLastName));
+        enterLastname.sendKeys(lastName);
+        WebElement enterEmployeeIDInput = wait.until(ExpectedConditions.visibilityOfElementLocated(enterEmployeeID));
+        enterEmployeeIDInput.sendKeys(employeeId);
+        WebElement documentType = wait.until(ExpectedConditions.visibilityOfElementLocated(enterDocumentType));
+        documentType.click();
+        WebElement enterDocumentType = wait.until(ExpectedConditions.visibilityOfElementLocated(selectDocumentType));
+        enterDocumentType.click();
+        WebElement enterDocumentNumber = wait.until(ExpectedConditions.visibilityOfElementLocated(enterDocumentNo));
+        enterDocumentNumber.sendKeys(docNumber);
+        Thread.sleep(3000);
+        WebElement enterPhoto = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(" div > div > div:nth-child(2) > button:nth-child(2)")));
+
+        boolean enabled = driver.findElement(EditEmployee.photoButton).isEnabled();
+        System.out.println(enabled);
+        WebElement saveButton = wait.until(ExpectedConditions.visibilityOfElementLocated(enterSaveButton));
+        saveButton.click();
+
     }
 }

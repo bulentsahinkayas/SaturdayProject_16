@@ -1,15 +1,28 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 public class SearchForAnEmployee {
 
 
     WebDriver driver;
-    WebDriverWait wait;
+    protected WebDriverWait wait;
+    public  <T> void waitFor(ExpectedCondition<T> condition) {
+        waitFor(condition, condition.toString());
+    }
 
+    public  <T> void waitFor(ExpectedCondition<T> condition, String errorMessage) {
+        try {
+            wait.until(condition);
+        } catch (TimeoutException e) {
+            Assert.fail(errorMessage);
+        }
+    }
     public SearchForAnEmployee(WebDriver driver, WebDriverWait wait){
         this.driver = driver;
         this.wait = wait;
@@ -49,8 +62,10 @@ public class SearchForAnEmployee {
         clickEmployees.click();
 
         WebElement enterNameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(searchEmployeeName));
+        enterNameInput.clear();
         enterNameInput.sendKeys(firstName);
         WebElement enterLastname = wait.until(ExpectedConditions.visibilityOfElementLocated(searchEmployeeLastname));
+        enterLastname.clear();
         enterLastname.sendKeys(lastName);
         WebElement enterSearchButton = wait.until(ExpectedConditions.visibilityOfElementLocated(searchButton));
         enterSearchButton.click();
